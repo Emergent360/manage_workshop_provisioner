@@ -9,7 +9,7 @@
     route53:
       state: get
       zone: lab-emergent360.com
-      record: provision-dev.lab-emergent360.com
+      record: provision-"{{ stage }}".lab-emergent360.com
       type: A
     register: rec
     
@@ -18,14 +18,14 @@
       state: absent
       zone: lab-emergent360.com
       record: "{{ rec.set.record }}"
-      type: "{{ rec.set.type }}"
-      value: "{{ rec.set.value }}"
+#      type: "{{ rec.set.type }}"
+#      value: "{{ rec.set.value }}"
     when: rec.set
 
   - name: "Get instance ID"
     ec2_instance_info:
       filters:
-        "tag:Name": "workshop provisioner dev"
+        "tag:Name": "Workshop Provisioner {{ stage | capitalize }}"
     register: ec2
 
   - name: "Teardown instance"
