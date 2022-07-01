@@ -9,7 +9,7 @@
     route53:
       state: get
       zone: lab-emergent360.com
-      record: provision-"{{ stage }}".lab-emergent360.com
+      record: "provision-{{ stage }}.lab-emergent360.com"
       type: A
     register: rec
     
