@@ -18,8 +18,8 @@
       state: absent
       zone: lab-emergent360.com
       record: "{{ rec.set.record }}"
-#      type: "{{ rec.set.type }}"
-#      value: "{{ rec.set.value }}"
+      type: "{{ rec.set.type }}"
+      value: "{{ rec.set.value }}"
     when: rec.set
 
   - name: "Get instance ID"
