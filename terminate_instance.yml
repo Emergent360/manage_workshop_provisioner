@@ -1,6 +1,6 @@
 ---
 
-- name: "Launch Provisioner"
+- name: "Terminate Provisioner"
   hosts: localhost
   gather_facts: no
 
@@ -28,7 +28,7 @@
         "tag:Name": "Workshop Provisioner {{ stage | capitalize }}"
     register: ec2
 
-  - name: "Teardown instance"
+  - name: "Terminate instance"
     ec2_instance:
       state: absent
       instance_ids: "{{ ec2.instances[0].instance_id }}"
