@@ -21,7 +21,7 @@
     instance_ip: "{{ ec2.instances[0].public_ip_address }}"
 
 - name: "Add DNS record for provisioner"
-  amazon.aws.route53:
+  community.aws.route53:
     state: present
     zone: lab-emergent360.com
     record: "provision-{{ stage }}.lab-emergent360.com"
