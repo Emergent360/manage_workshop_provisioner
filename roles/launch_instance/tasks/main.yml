@@ -1,20 +1,13 @@
 ---
 # tasks file for launch_instance
 - name: "Launch instance"
-  ec2_instance:
+  amazon.aws.ec2_instance:
     region: "{{ ec2_region }}"
     name: "workshop provisioner {{ stage }}"
     key_name: "AnsibleProvisionerLarge"
     instance_type: "t3.xlarge"
     launch_template:
       id: "{{ template_id }}"
-  register: ec2
-
-- name: "Check that instance is started"
-  ec2_instance:
-    region: "{{ ec2_region }}"
-    state: running
-    instance_ids: "{{ ec2.instance_ids[0] }}"
   register: ec2
 
 - name: "Wait for connection on all hosts."
