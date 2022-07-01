@@ -24,6 +24,7 @@
 
   - name: "Get instance ID"
     ec2_instance_info:
+      ec2_region: us-east-1
       filters:
         "tag:Name": "Workshop Provisioner {{ stage | capitalize }}"
     register: ec2
