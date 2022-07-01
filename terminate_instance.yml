@@ -31,6 +31,7 @@
 
   - name: "Terminate instance"
     ec2_instance:
+      ec2_region: us-east-1
       state: absent
       instance_ids: "{{ ec2.instances[0].instance_id }}"
 
