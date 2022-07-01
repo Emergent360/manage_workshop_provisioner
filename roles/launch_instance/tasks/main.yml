@@ -3,7 +3,7 @@
 - name: "Launch instance"
   amazon.aws.ec2_instance:
     region: "{{ ec2_region }}"
-    name: "Workshop Provisioner {{ stage }}"
+    name: "Workshop Provisioner {{ stage | capitalize }}"
     key_name: "AnsibleProvisionerLarge"
     instance_type: "t3.xlarge"
     launch_template:

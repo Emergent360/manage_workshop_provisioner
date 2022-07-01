@@ -1,0 +1,39 @@
+---
+
+- name: "Launch Provisioner"
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+  - name: "Get DNS record for provisioner"
+    route53:
+      state: get
+      zone: lab-emergent360.com
+      record: provision-dev.lab-emergent360.com
+      type: A
+    register: rec
+    
+  - name: "Remove DNS record for provisioner"
+    route53:
+      state: absent
+      zone: lab-emergent360.com
+      record: "{{ rec.set.record }}"
+      type: "{{ rec.set.type }}"
+      value: "{{ rec.set.value }}"
+    when: rec.set
+
+  - name: "Get instance ID"
+    ec2_instance_info:
+      filters:
+        "tag:Name": "workshop provisioner dev"
+    register: ec2
+
+  - name: "Teardown instance"
+    ec2_instance:
+      state: absent
+      instance_ids: "{{ ec2.instances[0].instance_id }}"
+
+
+
+
+    
