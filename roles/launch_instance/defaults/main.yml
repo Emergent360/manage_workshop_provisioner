@@ -1,0 +1,4 @@
+---
+# defaults file for launch_instance
+ec2_region: us-east-1
+stage: test

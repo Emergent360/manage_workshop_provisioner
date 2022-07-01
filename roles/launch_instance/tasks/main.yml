@@ -1,0 +1,37 @@
+---
+# tasks file for launch_instance
+- name: "Launch instance"
+  ec2_instance:
+    region: "{{ ec2_region }}"
+    name: "workshop provisioner {{ stage }}"
+    key_name: "AnsibleProvisionerLarge"
+    instance_type: "t3.xlarge"
+    launch_template:
+      id: "{{ template_id }}"
+  register: ec2
+
+- name: "Check that instance is started"
+  ec2_instance:
+    region: "{{ ec2_region }}"
+    state: running
+    instance_ids: "{{ ec2.instance_ids[0] }}"
+  register: ec2
+
+- name: "Wait for connection on all hosts."
+  wait_for:
+    host: "{{ ec2.instances[0].public_ip_address }}"
+    port: 22
+    timeout: 500
+
+- name: "Get instance IP"
+  set_fact:
+    instance_ip: "{{ ec2.instances[0].public_ip_address }}"
+
+- name: "Add DNS record for provisioner"
+  route53:
+    state: present
+    zone: lab-emergent360.com
+    record: "provision-{{ stage }}.lab-emergent360.com"
+    type: A
+    value: "{{ instance_ip }}"
+    overwrite: yes

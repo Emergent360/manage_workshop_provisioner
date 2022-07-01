@@ -1,0 +1,16 @@
+---
+
+- name: "Start Instance"
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+  - name: "Start instance"
+    ec2_instance:
+      ec2_region: "us-east-1"
+      state: running
+      filters:
+        "tag:Name": "{{ instance_name }}"
+    register: ec2
+
+    

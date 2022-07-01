@@ -1,0 +1,13 @@
+---
+
+- name: "Launch Provisioner"
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: lanch provisioner instance {{ stage }}
+    import_role:
+      name: launch_instance
+    delegate_to: localhost
+  
+  
